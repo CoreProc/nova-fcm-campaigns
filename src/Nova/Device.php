@@ -17,6 +17,8 @@ class Device extends Resource
      */
     public static $model = \Coreproc\NovaFcmCampaigns\Models\Device::class;
 
+    public static $group = 'FCM Campaigns';
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
