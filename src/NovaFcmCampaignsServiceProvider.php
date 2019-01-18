@@ -21,6 +21,10 @@ class NovaFcmCampaignsServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-fcm-campaigns');
 
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'nova-fcm-campaigns-migrations');
+
         $this->app->booted(function () {
             $this->routes();
         });
