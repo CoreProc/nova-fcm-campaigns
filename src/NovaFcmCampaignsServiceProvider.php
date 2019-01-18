@@ -25,7 +25,12 @@ class NovaFcmCampaignsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
         ], 'nova-fcm-campaigns-migrations');
-        
+
+        // Publish config file
+        $this->publishes([
+            __DIR__ . '/../config/nova_fcm_campaigns.php' => config_path('nova_fcm_campaigns.php'),
+        ], 'nova-fcm-campaigns-config');
+
         // Register middleware
         $router = $this->app['router'];
 
