@@ -3,6 +3,7 @@
 namespace Coreproc\NovaFcmCampaigns;
 
 use Coreproc\NovaFcmCampaigns\Http\Middleware\Authorize;
+use Coreproc\NovaFcmCampaigns\Http\Middleware\StoreDevice;
 use Coreproc\NovaFcmCampaigns\Models\FcmCampaign;
 use Coreproc\NovaFcmCampaigns\Observers\FcmCampaignObserver;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,20 @@ class NovaFcmCampaignsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-fcm-campaigns');
+
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'nova-fcm-campaigns-migrations');
+
+        // Publish config file
+        $this->publishes([
+            __DIR__ . '/../config/nova_fcm_campaigns.php' => config_path('nova_fcm_campaigns.php'),
+        ], 'nova-fcm-campaigns-config');
+
+        // Register middleware
+        $router = $this->app['router'];
+
+        $router->aliasMiddleware('store.device', StoreDevice::class);
 
         $this->app->booted(function () {
             $this->routes();

@@ -71,7 +71,7 @@ class FcmCampaign extends Model
             'status' => self::STATUS_SENDING,
         ]);
 
-        $this->notify(new FcmCampaignNotification);
+        $this->notify(app(config('nova_fcm_campaigns.fcm_campaign_notification', FcmCampaignNotification::class)));
 
         $this->update([
             'status' => self::STATUS_SENT,
