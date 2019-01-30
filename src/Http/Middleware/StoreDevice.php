@@ -13,10 +13,11 @@ class StoreDevice
      *
      * @param  \Illuminate\Http\Request $request
      * @param  \Closure $next
+     * @param null $guard
      * @param bool $isRequired
      * @return mixed
      */
-    public function handle($request, Closure $next, $isRequired = true)
+    public function handle($request, Closure $next, $guard = null, $isRequired = true)
     {
         $deviceUdid = $request->header('X-Device-UDID');
 
@@ -43,12 +44,14 @@ class StoreDevice
 
         $request->device = $device;
 
+        $request->guard = $guard ?? config('auth.defaults.guard');
+
         return $next($request);
     }
 
     public function terminate($request, $response)
     {
-        $user = $request->user();
+        $user = $request->user($request->guard);
 
         if (! empty($user) && ! empty($request->device)) {
             $request->device->setDeviceable($user);
