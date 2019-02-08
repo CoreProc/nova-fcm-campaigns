@@ -25,8 +25,6 @@ class CreateDevicesTable extends Migration
             $table->string('app_version', 20)->nullable()->index();
             $table->nullableTimestamps();
             $table->softDeletes();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
