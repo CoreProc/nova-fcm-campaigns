@@ -78,4 +78,9 @@ class FcmCampaign extends Model
             'sent_at' => now(),
         ]);
     }
+
+    public function routeNotificationForFcm()
+    {
+        return $this->devices()->pluck('fcm_token')->toArray();
+    }
 }
