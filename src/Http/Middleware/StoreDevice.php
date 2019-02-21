@@ -54,7 +54,7 @@ class StoreDevice
         $user = $request->user($request->guard);
 
         if (! empty($user) && ! empty($request->device)) {
-            $request->device->setDeviceable($user);
+            $request->device->deviceable()->associate($user);
             $request->device->save();
         }
     }
