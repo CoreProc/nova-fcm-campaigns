@@ -13,7 +13,7 @@ class CreateDevicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('fcm_devices', function (Blueprint $table) {
             $table->increments('id');
             $table->nullableMorphs('deviceable');
             $table->string('udid', 40)->nullable()->index();
@@ -35,6 +35,6 @@ class CreateDevicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('fcm__devices');
     }
 }
